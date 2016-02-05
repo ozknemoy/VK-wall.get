@@ -26,3 +26,5 @@ mode - 0 - only text of post about 250 letters, 1 - full text of post, 2 - full 
   (режим отображения. Значения: 0 - только текст записи, органиченный
   250 символами; 1 - только текст записи; 2 - полный контент записи . По умолчанию: 0)
 allowPages - Display navigation buttons(Default: false) (отображать кнопки. По умолчанию: false)
+
+recommend for use with bootstrap(i used class "btn btn-default" and "btn btn-default active")

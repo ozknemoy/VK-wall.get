@@ -4,7 +4,7 @@
 $(document).ready(function() {
     $('.container').VKWall({
         ownerId: -803,
-        count: 20,
+        count: 13,
         mode: 2,
         allowPages: true
     });

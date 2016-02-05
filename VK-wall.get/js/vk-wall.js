@@ -15,7 +15,6 @@ function update2(wall_posts ,start ,end ){
     var post= document.getElementById("post");
     var wall_post_array=wall_posts.response.items;
     for (var i=start ; i<end; i++) {
-
         //текст поста
         if(wall_post_array[i].text) {
             var tex = wall_post_array[i].text;
@@ -23,10 +22,15 @@ function update2(wall_posts ,start ,end ){
             if(tex.indexOf("http")!=-1) {
                 var n1 = tex.indexOf("http");
                 var ur_raw = tex.slice(n1);
-                var urr = ur_raw.indexOf(" ");
-                var ur = ur_raw.slice(0,urr);
-                tex = tex.slice(0,n1)+ "<a href='" + ur + "'>" + ur + "</a>" + tex.slice(n1+urr);
+                var urr = ur_raw.indexOf(" ");//длинна ссылки
+                var ur = ur_raw.slice(0,urr);//сама ссылка
+                if(urr==-1) {//если после ссылки нету текста
+                    tex = tex.slice(0,n1)+ "<a href='" + ur + "'>" + ur + "</a>";
+                }
+                else tex = tex.slice(0,n1)+ "<a href='" + ur + "'>" + ur + "</a>" + tex.slice(n1+urr);
+
             }
+
             //поиск ссылок на анкеты vk
             if(tex.indexOf("[")==-1) {//не находит ссылок
                 var text = tex;
@@ -40,8 +44,10 @@ function update2(wall_posts ,start ,end ){
                         tex.slice(no2+1, no3) + "</a>" + tex.slice(no3+1, tex.length);
                 } while (tex.indexOf("]")!==-1)
                 var text = tex;
+                console.log(tex);
             }
             if (settings.mode ==0) {
+
                 var numOfSpace = text.indexOf(" ", 250);
                 if(numOfSpace>0) {
                    var text = arraySlicer(text, numOfSpace).join('') + " ...";
@@ -71,7 +77,7 @@ function update2(wall_posts ,start ,end ){
                     var text_2 = tex_2;
                 }
                 var newElement_text_2=document.createElement("p");
-                newElement_text_2.setAttribute("class", "text");
+                newElement_text_2.setAttribute("class", "attachments_text");
                 newElement_text_2.innerHTML = text_2;
                 post.appendChild(newElement_text_2);
             }
@@ -94,6 +100,7 @@ function update2(wall_posts ,start ,end ){
             }
             }
         }
+            //перепост
         if(wall_post_array[i].copy_history) {
             //текст перепоста
             var copy_hist = wall_post_array[i].copy_history[0].text;
@@ -111,7 +118,7 @@ function update2(wall_posts ,start ,end ){
                 var copy_history = copy_hist;
             }
             var newElement_copy_history=document.createElement("div");
-            newElement_copy_history.setAttribute("class", "text");
+            newElement_copy_history.setAttribute("class", "repost_text");
             newElement_copy_history.innerHTML = copy_history;
             post.appendChild(newElement_copy_history);
             //фотки перепоста
@@ -189,7 +196,6 @@ function arraySlicer(arr, size) {
     for (var i=0; i<size; i++) { newArr.push(arr[i]);}
     return newArr;
 }
-
 
 (function($) {
     //объединяем опции
